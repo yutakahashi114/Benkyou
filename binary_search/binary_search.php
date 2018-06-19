@@ -48,6 +48,7 @@ for ($j = 0; $j < $len - 1; $j++) {
     $loop--;
 }
 
+// 2分探索を実行
 $now = floor($len/2);
 $next = 0;
 $max = $len;
