@@ -53,16 +53,16 @@ foreach ($tests as $test) {
         $hash10 = hexdec($hash16);
         $rest = $hash10 % $len;
         // $data_index[名字を$lenで割った余り]に、名字と氏名の配列を格納する
-        array_push($data_index[$rest], $value);
+        array_push($data_index[$rest], [$hash10, $value[1]]);
     }
     // 検索する名字の余りを求める
     $search_hash = hexdec(hash($hash_code, $search));
-    $search_rest = $rest % $len;
+    $search_rest = $search_hash % $len;
 
     // 余りの中から名字を検索する
     foreach($data_index[$search_rest] as $value) {
-        $count++;
-        if ($value[0] == $search) {
+        // $count++;
+        if ($value[0] == $search_hash) {
             $result = $value[1];
             break;
         }        
@@ -70,6 +70,6 @@ foreach ($tests as $test) {
 
     // 結果を出力する
     var_dump($result);
-    /*
+/*
 }
 var_dump($count);
