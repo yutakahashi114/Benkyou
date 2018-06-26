@@ -1,6 +1,8 @@
 <?php
-
 /*
+// 計測用
+$count = 0;
+
 // テスト用
 $tests = [
     ['小笹', '佑京'],
@@ -17,7 +19,7 @@ foreach ($tests as $test) {
     $search = $test[0];
 */
 
-    $search = '小笹';
+   $search = '小笹';
 
     // 検索する元の配列
     $data = [
@@ -73,6 +75,7 @@ foreach ($tests as $test) {
     $answer = '';
 
     for ($i = 0; $i < $len; $i++) {
+        $count++;
         if ($data_hash[$now][0] == $search_hash) {
             // 一致していればanswerに代入してbreak
             $answer = $data_hash[$now][1];
@@ -96,4 +99,6 @@ foreach ($tests as $test) {
     }
     // 答えを出力する
     var_dump($answer);
-// }
+    /*
+}
+var_dump($count);
