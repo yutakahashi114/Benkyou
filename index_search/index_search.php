@@ -62,7 +62,7 @@ foreach ($tests as $test) {
     // 余りの中から名字を検索する
     foreach($data_index[$search_rest] as $value) {
         // $count++;
-        if ($value[0] == $search_hash) {
+        if ($value[0] === $search_hash) {
             $result = $value[1];
             break;
         }        
