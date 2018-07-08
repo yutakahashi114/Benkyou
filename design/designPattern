@@ -3,8 +3,15 @@
 
 GoFデザインパターン
 
-Immutable Pattern
+・Immutable Pattern
 不変
 
 シャローコピー
 ディープコピー
+
+・イテレータ
+配列などで、各要素を示す矢印のようなもの
+小さい方から順に取ってきたり
+
+interface collection
+を持っていればgetIteratorができる
