@@ -10,7 +10,7 @@ $hanoi = [ [ 1, 2, 3, 4, 5 ], [], [] ];
 /**
  * @param array   $hanoi  ハノイの塔
  * @param integer $height 塔の高さ
- * @param integer $now    塔の現在位置（0, 1, 2）
+ * @param integer $now    動かす塔の現在位置（0, 1, 2）
  * @param integer $move   塔を動かす方向（1, -1）
  */
 function hanoi($hanoi, $height, $now, $move)
@@ -27,10 +27,8 @@ function hanoi($hanoi, $height, $now, $move)
         array_unshift($hanoi[($now + $move + 3) % 3], array_shift($hanoi[$now]));
 
         $result = hanoi($hanoi, $height - 1, $next, -1 * $move);
-        $hanoi = $result[0];
-        $next = $result[1];
         
-        return [$hanoi, $next];
+        return $result;
     }
 }
 
