@@ -10,7 +10,7 @@ public class DTUMember implements Collection {
     public String getAllMember() {
         MyIterator iterator = this.getIterator();
         String result = "";
-        while (iterator.hasNext() == true) {
+        while (iterator.hasNext()) {
             String name = iterator.next();
             result += name;
             result += "\n";
