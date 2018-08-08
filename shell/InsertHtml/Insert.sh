@@ -1,6 +1,5 @@
 #!/bin/sh
 
-find ./invhtml -name '*.html'
 file=($(find ./invhtml -name '*.html'))
 
 LF=$(printf '\\\012_')
