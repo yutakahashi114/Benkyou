@@ -71,20 +71,24 @@ public class Person {
         int candidate_max = candidate_card.stream().min((a, b) -> b.compareTo(a)).get();
         int visible_min = visible_number.stream().min((a, b) -> a.compareTo(b)).get();
         int visible_max = visible_number.stream().min((a, b) -> b.compareTo(a)).get();
-        int mid_flag_number = 1;
+
+        // 全ての候補の最大より大きい数字と全ての候補の最小より小さい数字が見えていればMID
+        Boolean mid_min_flag = false;
+        Boolean mid_max_flag = false;
         for (int one_visible_number : visible_number) {
-            if ((one_visible_number < candidate_min) || (candidate_max < one_visible_number)){
-                mid_flag_number *= 1;
-            } else {
-                mid_flag_number *= 0;
+            if (one_visible_number < candidate_min) {
+                mid_min_flag = true;
+            }
+            if (candidate_max < one_visible_number){
+                mid_max_flag = true;
             }
         }
-        boolean mid_flag = (mid_flag_number == 1);
+        boolean mid_flag = (mid_min_flag && mid_max_flag);
         
-        // 全ての候補が見えている数字より小さい
+        // 全ての候補が見えている数字より小さければMIN
         if (candidate_max < visible_min) {
             return "MIN";
-        // 全ての候補が見えている数字より大きい
+        // 全ての候補が見えている数字より大きければMAX
         } else if (candidate_min > visible_max) {
             return "MAX";
         } else if (mid_flag) {

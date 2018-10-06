@@ -14,7 +14,6 @@ public class Main {
         String regex = "([A-Z]+)=([0-9]+)";
         for (String data : args) {
             Pattern p = Pattern.compile(regex);
-
             Matcher m = p.matcher(data);
             if (m.find()){
                 member_names.add(m.group(1));
