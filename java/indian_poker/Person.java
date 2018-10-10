@@ -61,7 +61,7 @@ public class Person {
                 reduced_candidate_number.remove(reduced_candidate_number.indexOf(assumed_number));
             }
         }
-        if (reduced_candidate_number.size() == 1) {
+        if (reduced_candidate_number.size() == 0) {
             return "";
         }
         return this.checkAssumedCard(reduced_candidate_number, answer_visible_number);

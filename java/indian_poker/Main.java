@@ -4,7 +4,12 @@ import java.util.regex.*;
 public class Main {
     public static void main(String[] args) {
         // 使うカード
-        ArrayList<Integer> cards = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        // ArrayList<Integer> cards = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        ArrayList<Integer> cards = new ArrayList<>();
+        int card_number = 10;
+        for (int i = 1; i <= card_number; i++) {
+            cards.add(i);
+        }
         // 参加する人
         ArrayList<String> member_names = new ArrayList<>();
         // 参加者の引いたカード
@@ -41,7 +46,7 @@ public class Main {
         int answer_count = 0;
         int member_count = member_names.size();
         while (!result) {
-            if (answer_count > answer_count) {
+            if (answer_count > cards.size()) {
                 break;
             }
             Person answer_person = member.get(answer_count % member_count);
