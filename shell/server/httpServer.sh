@@ -5,7 +5,7 @@ do
     echo "LINE: $line"
     if [[ ${line} =~ (^GET .*$) ]]
     then
-        file=$(echo ${line} | awk '{print $2;}')
+        file=$(echo ${line} | awk '{print $2;}' | tr -d '/')
         if [ -r $file ]
         then
             cat $file

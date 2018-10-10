@@ -4,7 +4,7 @@ import java.util.regex.*;
 public class Main {
     public static void main(String[] args) {
         // 使うカード
-        ArrayList<Integer> cards = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5));
+        ArrayList<Integer> cards = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
         // 参加する人
         ArrayList<String> member_names = new ArrayList<>();
         // 参加者の引いたカード
