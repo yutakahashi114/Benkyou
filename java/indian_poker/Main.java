@@ -36,6 +36,7 @@ public class Main {
                     // 自分以外のメンバーの数字
                     visible_card.put(member_names.get(j), member_cards.get(j));
                 } else {
+                    // 自分の数字は見えない。-1としておく。
                     visible_card.put(member_names.get(j), -1);
                 }
             }
@@ -47,6 +48,8 @@ public class Main {
         int member_count = member_names.size();
         while (!result) {
             if (answer_count > cards.size()) {
+                System.out.println("");
+                System.out.print("infinite loop");
                 break;
             }
             Person answer_person = member.get(answer_count % member_count);
