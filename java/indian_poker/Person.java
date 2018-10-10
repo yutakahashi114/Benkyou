@@ -2,71 +2,77 @@ import java.util.*;
 
 public class Person {
     public String name;
-    public int card;
     public ArrayList<Integer> all_card = new ArrayList<>();
     public LinkedHashMap<String, Integer> visible_card = new LinkedHashMap<>();
-    public LinkedHashMap<String, ArrayList<Integer>> people_cards = new LinkedHashMap<>();
 
-    public Person(String name, int card, ArrayList<Integer> cards, ArrayList<String> member, LinkedHashMap<String, Integer> visible_card) {
+    public Person(String name, ArrayList<Integer> cards, LinkedHashMap<String, Integer> visible_card) {
         this.name = name;
-        this.card = card;
         this.visible_card = visible_card;
         for (int number : cards) {
             all_card.add(number);
         }
+    }
 
-        for (String member_name : member) {
-            // 値渡し
-            ArrayList clone_cards = new ArrayList<>();
-            for (int number : cards) {
-                clone_cards.add(number);
+    public String answer(LinkedHashMap<String, Integer> visible_card, int answer_count) {
+        ArrayList<Integer> answer_visible_number = new ArrayList<>();
+        for (int number : visible_card.values()) {
+            if (number != -1) {
+                answer_visible_number.add(number);
             }
-            this.people_cards.put(member_name, clone_cards);
         }
-    }
-
-    public ArrayList<Integer> getMyCard() {
-        return this.people_cards.get(this.name);
-    }
-
-    public void deleteSuggestion(String name, int number) {
-        ArrayList<Integer> target_card = this.people_cards.get(name);
-        target_card.remove(target_card.indexOf(number));
-    }
-
-    public Boolean deleteSuggestionByOtherAnswer(String answer_person_name) {
-        ArrayList<Integer> check_card = this.people_cards.get(answer_person_name);
-        ArrayList<Integer> my_card = this.people_cards.get(this.name);
-        ArrayList<Integer> impossible_numbers = new ArrayList<>();
-        for (int number : my_card) {
-            ArrayList clone_check_card = new ArrayList<>();
-            for (int add_number : check_card) {
-                clone_check_card.add(add_number);
+        ArrayList<Integer> answer_candidate_number = new ArrayList<>();
+        ArrayList<Integer> reduced_candidate_number = new ArrayList<>();
+        for (int number : this.all_card) {
+            if (answer_visible_number.indexOf(number) == -1) {
+                answer_candidate_number.add(number);
+                reduced_candidate_number.add(number);
             }
-            clone_check_card.remove(clone_check_card.indexOf(number));
-
-            ArrayList answer_visible_card = new ArrayList<>();
-            for (String name : this.visible_card.keySet()) {
-                if (name != answer_person_name) {
-                    answer_visible_card.add(this.visible_card.get(name));
+        }
+        // 最初の回答の推測
+        if (answer_count == 0) {
+            return this.checkAssumedCard(answer_candidate_number, answer_visible_number);
+        }
+        // 2回目以降の回答の推測
+        String now_person_name = "";
+        String next_person_name = "";
+        int count = 0;
+        for (String name : visible_card.keySet()) {
+            if (count == (answer_count % visible_card.size())) {
+                now_person_name = name;
+            }
+            if (count == ((answer_count - 1) % visible_card.size())) {
+                next_person_name = name;
+            }
+            count++;
+        }
+        for (int assumed_number : answer_candidate_number) {
+            LinkedHashMap<String, Integer> assumed_visible_card = new LinkedHashMap<>();
+            for (String name : visible_card.keySet()) {
+                if (name == now_person_name) {
+                    assumed_visible_card.put(name, assumed_number);
+                } else if (name == next_person_name) {
+                    assumed_visible_card.put(name, -1);
+                } else {
+                    assumed_visible_card.put(name, visible_card.get(name));
                 }
             }
-            answer_visible_card.add(number);
-
-            String answer = this.checkImagineCard(clone_check_card, answer_visible_card);
-            if (answer != "?") {
-                // "?"以外であれば、そうなる数字を自分の候補から削除
-                impossible_numbers.add(number);
+            String result = this.answer(assumed_visible_card, answer_count - 1);
+            if (result != "?") {
+                reduced_candidate_number.remove(reduced_candidate_number.indexOf(assumed_number));
             }
         }
-        for (int impossible_number : impossible_numbers) {
-            this.deleteSuggestion(this.name, impossible_number);
+        if (reduced_candidate_number.size() == 1) {
+            return "";
         }
-        // 候補の削除が一度でも起きればtrueを返す
-        return (impossible_numbers.size() > 0);
+        return this.checkAssumedCard(reduced_candidate_number, answer_visible_number);
     }
 
-    public String checkImagineCard(ArrayList<Integer> candidate_card, ArrayList<Integer> visible_number) {
+
+    public String answerResult(int answer_count) {
+        return this.answer(this.visible_card, answer_count);
+    }
+
+    public String checkAssumedCard(ArrayList<Integer> candidate_card, ArrayList<Integer> visible_number) {
         int candidate_min = candidate_card.stream().min((a, b) -> a.compareTo(b)).get();
         int candidate_max = candidate_card.stream().min((a, b) -> b.compareTo(a)).get();
         int visible_min = visible_number.stream().min((a, b) -> a.compareTo(b)).get();
@@ -96,14 +102,5 @@ public class Person {
         } else {
             return "?";
         }
-    }
-
-    public String checkMyCard() {
-        ArrayList<Integer> my_card = this.people_cards.get(this.name);
-        ArrayList visible_number = new ArrayList<>();
-            for (String name : this.visible_card.keySet()) {
-                visible_number.add(this.visible_card.get(name));
-            }
-        return this.checkImagineCard(my_card, visible_number);
     }
 }
