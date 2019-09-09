@@ -6,7 +6,7 @@ public class Main {
         // 使うカード
         // ArrayList<Integer> cards = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
         ArrayList<Integer> cards = new ArrayList<>();
-        int card_number = 10;
+        int card_number = 13;
         for (int i = 1; i <= card_number; i++) {
             cards.add(i);
         }
